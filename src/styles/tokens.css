@@ -1,0 +1,65 @@
+:root {
+  --bg: #ffffff;
+  --surface-subtle: #f7f8f8;
+  --navy: #172b3a;
+  --text: #252d33;
+  --text-secondary: #56636d;
+  --blue: #416782;
+  --ice: #eaf1f5;
+  --teal: #56847f;
+  --success: #39765d;
+  --warning: #a87532;
+  --danger: #b44949;
+  --border: #e2e7ea;
+  --radius-control: 8px;
+  --radius-media: 12px;
+  --content-max: 1320px;
+
+  /* Derived, not part of the brief palette */
+  --navy-hover: #23405a;
+  --focus: #416782;
+  --success-bg: #eef5f1;
+  --warning-bg: #fbf5ec;
+
+  --font-heading: 'Manrope Variable', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  --font-body: 'Inter Variable', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+
+  --space-1: 8px;
+  --space-2: 12px;
+  --space-3: 16px;
+  --space-4: 24px;
+  --space-5: 32px;
+  --space-6: 48px;
+  --space-7: 64px;
+
+  --gutter: 20px;
+  --header-h: 64px;
+
+  --fs-cover: 34px;
+  --fs-scene: 26px;
+  --fs-panel: 20px;
+  --fs-body: 16.5px;
+  --fs-small: 13.5px;
+
+  --measure: 62ch;
+  --ease: cubic-bezier(0.2, 0, 0, 1);
+}
+
+@media (min-width: 768px) {
+  :root {
+    --gutter: 48px;
+    --header-h: 68px;
+    --fs-cover: 48px;
+    --fs-scene: 32px;
+    --fs-panel: 22px;
+    --fs-body: 17.5px;
+    --fs-small: 14px;
+  }
+}
+
+@media (min-width: 1280px) {
+  :root {
+    --gutter: 64px;
+    --fs-cover: 54px;
+  }
+}
