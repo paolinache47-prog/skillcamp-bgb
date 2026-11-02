@@ -162,13 +162,9 @@ h2[tabindex='-1']:focus {
   transition: text-decoration-color 150ms;
 }
 
-.stage-progress + .link-button {
-  margin-left: 0;
-}
-
-@media (max-width: 767px) {
-  .stage-progress + .link-button {
-    margin-left: auto;
+@media (min-width: 768px) {
+  .stage-progress ~ .link-button {
+    margin-left: 0;
   }
 }
 
@@ -323,17 +319,17 @@ h2[tabindex='-1']:focus {
 }
 
 .intro .lead {
-  margin-top: var(--space-4);
+  margin-top: var(--space-3);
   max-width: 34em;
 }
 
-.intro-meta {
-  margin-top: var(--space-5);
-  padding-top: var(--space-3);
-  border-top: 1px solid var(--border);
-  font-size: var(--fs-small);
+.intro-tagline {
+  margin-top: var(--space-2);
+  font-family: var(--font-heading);
+  font-size: 20px;
   font-weight: 600;
-  color: var(--text-secondary);
+  line-height: 1.3;
+  color: var(--blue);
 }
 
 .intro-actions {
@@ -439,6 +435,7 @@ h2[tabindex='-1']:focus {
   position: relative;
   width: 100%;
   max-height: calc(100vh - var(--header-h) - 220px);
+  max-height: calc(100svh - var(--header-h) - 220px);
   min-height: 180px;
   border-radius: var(--radius-media);
   overflow: hidden;
@@ -1182,75 +1179,6 @@ fieldset:disabled .choice:not(.is-selected) {
   color: var(--text-secondary);
 }
 
-.reveal-list {
-  margin: 0;
-  padding: 0;
-  list-style: none;
-  display: grid;
-  gap: var(--space-1);
-}
-
-.reveal-list li {
-  display: flex;
-  align-items: center;
-  gap: var(--space-2);
-  min-height: 48px;
-  padding: 6px 0;
-  border-bottom: 1px solid var(--border);
-}
-
-.reveal-index {
-  display: grid;
-  place-items: center;
-  flex: none;
-  width: 26px;
-  height: 26px;
-  border-radius: 50%;
-  border: 1.5px solid var(--navy);
-  color: var(--navy);
-  font-size: 12px;
-  font-weight: 700;
-}
-
-.reveal-list li.is-shown .reveal-index {
-  border-color: var(--success);
-  color: var(--success);
-}
-
-.reveal-index svg {
-  width: 14px;
-  height: 14px;
-  stroke-width: 2.25;
-}
-
-.reveal-text {
-  font-weight: 600;
-  color: var(--navy);
-  animation: region-in 200ms var(--ease);
-}
-
-.reveal-button {
-  min-height: 44px;
-  padding: 0;
-  border: 0;
-  background: none;
-  color: var(--blue);
-  font-weight: 600;
-  text-align: left;
-  text-decoration: underline;
-  text-underline-offset: 4px;
-  cursor: pointer;
-}
-
-.reveal-button:disabled {
-  color: var(--text-secondary);
-  cursor: not-allowed;
-}
-
-.reveal-pending {
-  color: var(--text-secondary);
-}
-
 .condition-list {
   margin: calc(var(--space-2) * -1) 0 0;
   padding: 0;
@@ -1525,71 +1453,35 @@ fieldset:disabled .choice:not(.is-selected) {
   color: var(--text-secondary);
 }
 
-.result-score {
-  margin-top: var(--space-4);
-  font-size: 20px;
-  color: var(--navy);
+.final-result h1 {
+  overflow-wrap: break-word;
+  hyphens: auto;
 }
 
-.result-score strong {
-  font-family: var(--font-heading);
-  font-size: 32px;
+.final-result h1 strong {
   font-weight: 700;
+  white-space: nowrap;
 }
 
 .result-all {
-  margin-top: var(--space-1);
+  margin-top: var(--space-2);
   font-weight: 600;
   color: var(--success);
 }
 
-.result-list {
-  margin: var(--space-4) 0 0;
-  padding: 0;
-  list-style: none;
-  width: 100%;
-  max-width: 640px;
+.result-topics {
+  margin-bottom: var(--space-3);
 }
 
-.result-list li {
-  display: grid;
-  grid-template-columns: 24px minmax(0, 1fr) auto;
-  gap: var(--space-2);
-  align-items: baseline;
-  padding: 10px 0;
-  border-bottom: 1px solid var(--border);
+.result-review-done {
+  margin-bottom: var(--space-3);
   font-size: 15.5px;
-}
-
-.result-icon svg {
-  width: 18px;
-  height: 18px;
-  vertical-align: -3px;
-}
-
-.result-list li.is-correct .result-icon {
-  color: var(--success);
-}
-
-.result-list li.is-incorrect .result-icon {
-  color: var(--warning);
-}
-
-.result-state {
-  font-size: 14px;
   color: var(--text-secondary);
-  text-align: right;
 }
 
-@media (max-width: 600px) {
-  .result-list li {
-    grid-template-columns: 24px minmax(0, 1fr);
-  }
-
-  .result-state {
-    grid-column: 2;
-    text-align: left;
-  }
+.result-review-done strong {
+  color: var(--navy);
+  font-weight: 600;
 }
 
 .result-actions {
@@ -1613,6 +1505,320 @@ fieldset:disabled .choice:not(.is-selected) {
 
 .restart-confirm p {
   margin-bottom: var(--space-2);
+}
+
+.summary-note {
+  margin-top: var(--space-1);
+}
+
+/* ---------- Written justification (task 1) ---------- */
+
+.written-prompt {
+  font-size: 15.5px;
+  line-height: 1.55;
+}
+
+.written-field {
+  display: grid;
+  gap: var(--space-1);
+}
+
+.written-field label {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--navy);
+}
+
+.written-field textarea {
+  width: 100%;
+  min-height: 132px;
+  padding: 10px 12px;
+  border: 1px solid #c9d3d9;
+  border-radius: var(--radius-control);
+  background: var(--bg);
+  color: var(--text);
+  font: inherit;
+  font-size: 16px;
+  line-height: 1.5;
+  resize: vertical;
+}
+
+.written-field textarea::placeholder {
+  color: var(--text-secondary);
+  opacity: 1;
+}
+
+.written-field textarea:focus-visible {
+  border-color: var(--focus);
+}
+
+.written-compare {
+  display: grid;
+  gap: var(--space-3);
+}
+
+.written-block h3 {
+  font-size: 15.5px;
+  margin-bottom: 4px;
+}
+
+.written-block p {
+  font-size: 15.5px;
+  line-height: 1.55;
+  overflow-wrap: anywhere;
+  white-space: pre-wrap;
+}
+
+.written-model {
+  padding: var(--space-2) var(--space-3);
+  border-radius: var(--radius-control);
+  background: var(--ice);
+}
+
+.self-check {
+  margin: 0;
+  padding: var(--space-2) 0 0;
+  border: 0;
+  border-top: 1px solid var(--border);
+  min-width: 0;
+  display: grid;
+  gap: 4px;
+}
+
+.self-check legend {
+  padding: 0;
+  font-size: var(--fs-small);
+  color: var(--text-secondary);
+}
+
+.self-check label {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-2);
+  min-height: 44px;
+  padding: 8px 0;
+  font-size: 15px;
+  line-height: 1.4;
+  cursor: pointer;
+}
+
+.self-check input {
+  flex: none;
+  width: 18px;
+  height: 18px;
+  margin: 1px 0 0;
+  accent-color: var(--navy);
+}
+
+.result-written {
+  margin-top: var(--space-2);
+  font-size: 15.5px;
+  color: var(--text-secondary);
+}
+
+.intro-outlook {
+  margin-top: var(--space-3);
+  max-width: 34em;
+  font-size: 15.5px;
+  color: var(--text-secondary);
+}
+
+.scene-lead {
+  margin-top: var(--space-2);
+  max-width: var(--measure);
+  font-family: var(--font-heading);
+  font-weight: 600;
+  color: var(--blue);
+  overflow-wrap: break-word;
+  hyphens: auto;
+}
+
+.scene-lead + .scene-context {
+  margin-top: var(--space-1);
+}
+
+.next-topic {
+  width: 100%;
+  margin-top: var(--space-5);
+  padding-top: var(--space-4);
+  border-top: 2px solid var(--teal);
+}
+
+.next-topic-title {
+  font-size: 19px;
+  margin-bottom: var(--space-1);
+  overflow-wrap: break-word;
+  hyphens: auto;
+}
+
+.next-topic p {
+  max-width: var(--measure);
+}
+
+.next-topic-caption {
+  margin-top: var(--space-1);
+  font-size: var(--fs-small);
+  font-weight: 600;
+  color: var(--text-secondary);
+}
+
+/* ---------- Narrow screens ---------- */
+
+html {
+  scroll-padding-top: calc(var(--header-h) + var(--space-1));
+}
+
+.marker-number {
+  display: none;
+}
+
+@media (max-width: 767px) {
+  /* The stages stay visible: second row of the header. */
+  .topbar-inner {
+    height: auto;
+    min-height: var(--header-h);
+    flex-wrap: wrap;
+    gap: 0 var(--space-3);
+    padding-block: 2px var(--space-1);
+  }
+
+  .stage-progress {
+    display: flex;
+    order: 3;
+    width: 100%;
+    margin: 0;
+    gap: var(--space-3);
+    font-size: 13px;
+  }
+
+  /* More room above the on-screen keyboard while writing. */
+  body:has(textarea:focus) .topbar {
+    position: static;
+  }
+
+  html:has(textarea:focus) {
+    --header-h: 0px;
+  }
+
+  .main {
+    overflow-wrap: break-word;
+    hyphens: auto;
+  }
+}
+
+@media (max-width: 1023px) {
+  /* Same numbers as on the image, so text and marker stay connected. */
+  .marker-number {
+    display: inline-grid;
+    place-items: center;
+    width: 22px;
+    height: 22px;
+    margin-right: var(--space-1);
+    border-radius: 50%;
+    background: var(--navy);
+    color: #fff;
+    font-family: var(--font-body);
+    font-size: 12px;
+    font-weight: 700;
+    vertical-align: 1px;
+  }
+
+  /* Details directly under the image; the case premise and summary follow. */
+  .panel-hotspots .premise {
+    order: 1;
+  }
+
+  .panel-hotspots .summary {
+    order: 2;
+  }
+
+  .panel-hotspots .panel-actions {
+    order: 3;
+  }
+}
+
+/* ---------- Mobile Vorschau ---------- */
+
+.preview-trigger {
+  display: none;
+}
+
+@media (min-width: 1024px) and (hover: hover) and (pointer: fine) {
+  .preview-trigger {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    min-height: 44px;
+    padding: 0 var(--space-1);
+    border: 0;
+    background: none;
+    color: var(--blue);
+    font-size: var(--fs-small);
+    font-weight: 600;
+    white-space: nowrap;
+    cursor: pointer;
+  }
+
+  .preview-trigger svg {
+    width: 18px;
+    height: 18px;
+  }
+
+  .preview-trigger:hover {
+    color: var(--navy);
+  }
+}
+
+.preview-dialog {
+  width: fit-content;
+  height: fit-content;
+  max-width: none;
+  max-height: none;
+  padding: var(--space-1) var(--space-2) var(--space-2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-media);
+  background: var(--bg);
+  color: var(--text);
+  box-shadow: 0 20px 60px rgba(23, 43, 58, 0.18);
+}
+
+.preview-dialog::backdrop {
+  background: rgba(23, 43, 58, 0.45);
+}
+
+.preview-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+  margin-bottom: 4px;
+}
+
+.preview-head h2 {
+  font-size: 15px;
+}
+
+.preview-size {
+  margin-left: var(--space-1);
+  font-family: var(--font-body);
+  font-size: 13px;
+  font-weight: 400;
+  color: var(--text-secondary);
+}
+
+.preview-frame {
+  display: block;
+  box-sizing: content-box;
+  width: min(390px, calc(100vw - 64px));
+  height: min(844px, calc(100vh - 112px));
+  border: 1px solid var(--border);
+  border-radius: var(--radius-control);
+  background: var(--bg);
+}
+
+/* A phone has no permanent scrollbar eating into the viewport width. */
+html.is-preview {
+  scrollbar-width: none;
 }
 
 /* ---------- Motion ---------- */

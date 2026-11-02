@@ -63,14 +63,18 @@ const receptionMedia: MediaConfig = {
   ],
 };
 
+const receptionEndedFeedback =
+  'Der körperliche Angriff ist beendet. Ein Stoß lässt sich deshalb nicht mehr mit der Abwehr dieses Schlagversuchs rechtfertigen. Fortdauernde Beleidigungen rechtfertigen ihn nicht automatisch.';
+
 export const receptionSegment: Segment = {
   id: 'notwehr-empfang',
   stage: 'verstehen',
   intro: {
     caption: course.caption,
     title: course.title,
-    lead: 'Im Sicherheitsdienst müssen Sie Situationen schnell einschätzen. Lernen Sie, Angriffe und Gefahren rechtlich einzuordnen und die Grenzen Ihres Handelns zu erkennen.',
-    meta: 'Einstieg: Notwehr erkennen',
+    tagline: 'Ihre Schicht. Ihre Entscheidungen.',
+    lead: 'Am Empfang, auf dem Gelände und im Gebäude: Sie erkennen Gefahren, entscheiden über Ihr Eingreifen und prüfen die rechtlichen Grenzen.',
+    outlook: 'Drei Situationen. Anschließend wenden Sie Ihr Wissen auf einen neuen Fall an.',
     cta: 'Situation ansehen',
     mediaNote: 'Video mit Textalternative',
   },
@@ -85,29 +89,30 @@ export const receptionSegment: Segment = {
     premise: 'Für diesen Fall gilt: Der Besucher ist nicht zu dem Angriff berechtigt.',
     summary: {
       title: 'Notwehr · § 227 BGB',
-      text: 'Sie dürfen sich oder andere gegen einen gegenwärtigen rechtswidrigen Angriff verteidigen. Die Verteidigung muss erforderlich und geboten sein. Unter gleich wirksamen verfügbaren Mitteln ist das mildere zu wählen.',
+      text: 'Notwehr setzt einen gegenwärtigen rechtswidrigen Angriff eines Menschen voraus. Sie dürfen sich oder andere verteidigen; wer einen anderen Menschen schützt, leistet Nothilfe.',
+      notes: [
+        'Die Verteidigung muss erforderlich und geboten sein. Unter gleich wirksamen verfügbaren Mitteln ist das mildere zu wählen.',
+        'Geht die Gefahr von einem selbstständig handelnden Tier aus, ist stattdessen Notstand zu prüfen. Wird ein Tier von einem Menschen gezielt als Angriffsmittel eingesetzt, kann dagegen ein menschlicher Angriff vorliegen.',
+      ],
     },
   },
   media: receptionMedia,
   decision: {
     heading: 'Was ändert sich jetzt?',
-    scenario:
-      'Stellen Sie sich vor: Der Besucher senkt die Hand und entfernt sich. Der Angriff ist beendet; ein neuer Angriff droht nicht.',
-    question: 'Dürfen Sie den Besucher jetzt zur Strafe stoßen?',
+    scenario: 'Der Besucher senkt die Hände und tritt zurück. Er greift niemanden mehr an, beleidigt Ihre Kollegin aber weiter.',
+    question: 'Dürfen Sie ihn jetzt noch wegen des vorherigen Schlagversuchs stoßen?',
     options: [
       {
         id: 'yes',
-        label: 'Ja, wegen seines vorherigen Verhaltens.',
+        label: 'Ja, der vorherige Schlagversuch rechtfertigt den Stoß auch noch nach dem Ende dieses Angriffs.',
         correct: false,
-        feedback:
-          'Das frühere Verhalten genügt nicht. Der Angriff ist beendet. Ein nachträglicher Stoß zur Strafe lässt sich damit nicht als Notwehr rechtfertigen.',
+        feedback: `Nicht ganz. ${receptionEndedFeedback}`,
       },
       {
         id: 'no',
-        label: 'Nein, der Angriff ist beendet.',
+        label: 'Nein, der vorherige Schlagversuch rechtfertigt keinen Stoß mehr, nachdem dieser Angriff beendet ist.',
         correct: true,
-        feedback:
-          'Genau. Notwehr dient der Abwehr eines gegenwärtigen Angriffs. Sie erlaubt keine nachträgliche Bestrafung.',
+        feedback: `Richtig. ${receptionEndedFeedback}`,
       },
     ],
   },
@@ -120,7 +125,7 @@ export const receptionSegment: Segment = {
  */
 const roofMedia: MediaConfig = {
   id: 'roof',
-  title: 'Video: Lose Dachziegel über einem Gehweg',
+  title: 'Video: Lose Dachpfannen über einem Gehweg',
   src: media('roof-tiles.mp4'),
   poster: media('roof-poster.jpg'),
   freezeFrame: media('roof-freeze.jpg'),
@@ -129,8 +134,8 @@ const roofMedia: MediaConfig = {
   height: 1080,
   hasAudio: true,
   transcript: [
-    'An einem niedrigen Betriebsgebäude sind mehrere Dachziegel verrutscht. Sie drohen auf den Gehweg zu fallen.',
-    'Ein Sicherheitsmitarbeiter steht auf dem Gehweg, bemerkt die Gefahr und blickt zu den Ziegeln hinauf.',
+    'An einem niedrigen Betriebsgebäude sind mehrere Dachpfannen verrutscht. Sie drohen auf den Gehweg zu fallen.',
+    'Ein Sicherheitsmitarbeiter steht auf dem Gehweg, bemerkt die Gefahr und blickt zu den Dachpfannen hinauf.',
   ],
   hotspots: [],
 };
@@ -140,43 +145,30 @@ export const roofEpisode: RoofEpisode = {
   stage: 'unterscheiden',
   scene: {
     heading: 'Gefahr über dem Gehweg',
-    context: 'Bei einem Kontrollgang entdecken Sie lose Dachziegel über einem Gehweg.',
+    lead: 'Ihr Kontrollgang geht weiter. Diesmal droht die Gefahr von oben.',
+    context: 'Bei einem Kontrollgang entdecken Sie lose Dachpfannen über einem Gehweg.',
   },
   media: roofMedia,
   continuation: {
     heading: 'So geht der Fall weiter',
-    text: 'Sie sperren den gefährdeten Bereich ab. Für diesen Fall gilt: Die Absperrung allein reicht nicht aus, um die Gefahr ausreichend abzuwenden. Die losen Ziegel müssen entfernt werden. Beim notwendigen Abnehmen zerbrechen sie. Eine gleich wirksame, weniger schädliche Möglichkeit besteht nicht. Sie haben die Gefahr nicht selbst verschuldet.',
+    text: 'Sie sperren den gefährdeten Bereich ab. Für diesen Fall gilt: Die Absperrung allein reicht nicht aus, um die Gefahr ausreichend abzuwenden. Die losen Dachpfannen müssen entfernt werden. Eine gleich wirksame, weniger schädliche Möglichkeit besteht nicht. Sie haben die Gefahr nicht selbst verschuldet.',
+  },
+  question: {
+    prompt: 'Die gelösten Dachpfannen werden entfernt und zerbrechen dabei. Welche Sache wird beschädigt?',
+    options: [
+      { id: 'source', label: 'Die Sache, von der die Gefahr ausgeht.' },
+      { id: 'uninvolved', label: 'Eine unbeteiligte Sache, die zur Abwehr eingesetzt wird.' },
+    ],
+    correct: 'source',
+    submitLabel: 'Antwort ansehen',
   },
   compare: {
     heading: 'Gefahrenquelle und Eingriff',
-    instruction: 'Vergleichen Sie: Wovon ging die Gefahr aus – und was wurde beschädigt?',
-    items: [
-      { label: 'Gefahrenquelle', text: 'Gefahrenquelle: die losen Dachziegel.', highlightLabel: 'Gefahrenquelle' },
-      {
-        label: 'Beschädigte Sache',
-        text: 'Beschädigte Sache: dieselben Dachziegel.',
-        highlightLabel: 'Gefahrenquelle = beschädigte Sache',
-      },
-    ],
+    items: ['Gefahrenquelle: lose Dachpfannen', 'Beschädigte Sache: dieselben Dachpfannen'],
+    explanation: 'Gefahrenquelle und beschädigte Sache sind hier identisch. Deshalb ist § 228 BGB zu prüfen.',
+    highlightLabel: 'Gefahrenquelle und beschädigte Sache',
     // Displaced tiles on roof-freeze.jpg: about x 615–910 px, y 80–300 px of 1920×1080.
     region: { x: 0.32, y: 0.075, w: 0.155, h: 0.205 },
-    question: 'Richtet sich der Eingriff gegen die Gefahrenquelle oder gegen eine unbeteiligte Sache?',
-    options: [
-      {
-        id: 'source',
-        label: 'Gegen die Gefahrenquelle.',
-        correct: true,
-        feedback: 'Genau. Die Gefahr geht von den Dachziegeln selbst aus. Auch der Eingriff richtet sich gegen diese Ziegel.',
-      },
-      {
-        id: 'uninvolved',
-        label: 'Gegen eine unbeteiligte Sache.',
-        correct: false,
-        feedback:
-          'Hier sind Gefahrenquelle und beschädigte Sache identisch: die Dachziegel. Eine unbeteiligte Sache wäre ein anderer Gegenstand, von dem die Gefahr nicht ausgeht.',
-      },
-    ],
-    submitLabel: 'Einordnung ansehen',
   },
   rule: {
     heading: 'Defensiver Notstand · § 228 BGB',
@@ -185,7 +177,7 @@ export const roofEpisode: RoofEpisode = {
   consequences: {
     heading: 'Was bedeutet das hier?',
     application:
-      'Unter den beschriebenen Voraussetzungen ist das Beschädigen der Ziegel gerechtfertigt. Da Sie die Gefahr nicht selbst verschuldet haben, besteht wegen dieser gerechtfertigten Beschädigung keine Ersatzpflicht nach § 228 BGB.',
+      'Unter den beschriebenen Voraussetzungen ist das Beschädigen der Dachpfannen gerechtfertigt. Da Sie die Gefahr nicht selbst verschuldet haben, besteht wegen dieser gerechtfertigten Beschädigung keine Ersatzpflicht nach § 228 BGB.',
     addition: 'Wer die Gefahr selbst verschuldet hat, ist nach § 228 BGB zum Schadensersatz verpflichtet.',
     note: 'Auch bei Gefahren durch Tiere können diese Regeln gelten. Tiere sind keine Sachen; die Vorschriften über Sachen werden grundsätzlich entsprechend angewendet (§ 90a BGB).',
   },
@@ -219,29 +211,27 @@ export const doorEpisode: DoorEpisode = {
   stage: 'unterscheiden',
   scene: {
     heading: 'Eine verschlossene Tür',
+    lead: 'Im Gebäude wartet die nächste Situation: Ein Mann ist eingeschlossen.',
     context: 'Hinter einer verschlossenen Tür befindet sich eine Person in Gefahr.',
   },
   media: doorMedia,
   conditions: {
     heading: 'Für diesen Fall gilt:',
+    facts: 'Im Raum breitet sich dichter Rauch aus. Ein Mann ist eingeschlossen und bekommt kaum Luft. Die Tür lässt sich nicht öffnen.',
     items: [
-      'Die Person ist durch Rauch in akuter Lebensgefahr.',
-      'Hilfe ist verständigt, würde aber zu spät eintreffen.',
-      'Es gibt keinen anderen rechtzeitigen Zugang.',
-      'Die Tür zu beschädigen ist notwendig, um die Person zu retten.',
-      'Von der Tür selbst geht die Gefahr nicht aus.',
+      'Hilfe ist alarmiert, wird aber nicht rechtzeitig eintreffen.',
+      'Ein Schlüssel oder ein anderer rechtzeitig nutzbarer Zugang steht nicht zur Verfügung.',
     ],
   },
-  question: 'Wie handeln Sie unter diesen Voraussetzungen?',
+  question: 'Wie handeln Sie in dieser Situation?',
   submitLabel: 'Entscheidung ansehen',
   branches: [
     {
       id: 'damage',
-      choice: 'Die Tür beschädigen, um die Person zu erreichen.',
+      choice: 'Ich öffne die Tür gewaltsam, um den Mann aus dem Raum zu retten.',
       heading: 'Möglicher weiterer Verlauf',
-      text: 'Sie öffnen die Tür unter Beschädigung des Schlossbereichs. Die Person kann den Raum verlassen.',
-      feedback:
-        'Unter den vorgegebenen Bedingungen ist der notwendige Eingriff in die Tür durch § 904 BGB gerechtfertigt. Die Tür ist eine unbeteiligte Sache: Die Gefahr geht vom Rauch aus.',
+      text: 'Sie öffnen die Tür unter Beschädigung des Schlossbereichs. Der Mann kann den Raum verlassen.',
+      feedback: 'Sie erreichen den Mann rechtzeitig. Die rechtliche Bewertung hängt aber von den Voraussetzungen ab, nicht vom Erfolg.',
       consistent: true,
       // 5 s, 1920×1080. Until ~3.3 s the opening looks unnatural (hand on the glass, odd object at
       // the door edge, ghosting); from 3.6 s the door is open and the person leaves the room.
@@ -249,26 +239,46 @@ export const doorEpisode: DoorEpisode = {
     },
     {
       id: 'wait',
-      choice: 'Die Tür unbeschädigt lassen und auf Hilfe warten.',
+      choice: 'Ich warte auf die alarmierte Hilfe, um die Tür nicht zu beschädigen.',
       heading: 'Möglicher weiterer Verlauf',
-      text: 'Die Tür bleibt geschlossen. Die Person befindet sich weiterhin im verrauchten Raum.',
-      feedback:
-        'Das Warten beseitigt die akute Gefahr hier nicht rechtzeitig. Nach den vorgegebenen Bedingungen ist die Beschädigung der Tür notwendig. § 904 BGB kann diesen Eingriff in die unbeteiligte Sache rechtfertigen.',
+      text: 'Die Tür bleibt geschlossen. Der Mann befindet sich weiterhin im verrauchten Raum.',
+      feedback: 'Das Warten beseitigt die akute Gefahr hier nicht rechtzeitig.',
       consistent: false,
       // 5 s, 1920×1080. The door stays closed, the colleague steps back; played in full.
       video: { src: media('door-wait.mp4'), available: true },
     },
   ],
+  role: {
+    heading: 'Zwischenfrage',
+    note: 'Zum Üben, ohne Wertung.',
+    prompt: 'Welche Rolle spielt die Tür bei der Gefahrenabwehr?',
+    options: [
+      { id: 'source', label: 'Die Tür ist die Sache, von der die Rauchgefahr ausgeht.' },
+      { id: 'access', label: 'Die Tür wird beschädigt, um Zugang zum gefährdeten Mann zu erhalten.' },
+    ],
+    correct: 'access',
+    submitLabel: 'Antwort ansehen',
+    explanation: 'Die Gefahr geht hier vom Rauch aus. Die Tür wird als unbeteiligte Sache zur Rettung beschädigt. Deshalb ist § 904 BGB zu prüfen.',
+    nextLabel: 'Zur Rechtsgrundlage',
+  },
   rule: {
     heading: 'Aggressiver Notstand · § 904 BGB',
     text: 'Sie greifen auf eine unbeteiligte Sache zu, um eine gegenwärtige Gefahr abzuwenden. Der Eingriff muss notwendig sein. Der drohende Schaden muss gegenüber dem Schaden an der Sache unverhältnismäßig groß sein.',
     application: 'Hier steht der drohende schwere Personenschaden dem Schaden an der Tür gegenüber.',
-    purpose: 'Sie handeln zur Gefahrenabwehr.',
     consequence:
       'Der Eigentümer der Tür kann Ersatz seines entstandenen Schadens verlangen. Eine gerechtfertigte Einwirkung bedeutet also nicht automatisch, dass kein Ersatzanspruch besteht.',
   },
-  comparison: ['Dachziegel · § 228: Eingriff in die Gefahrenquelle.', 'Tür · § 904: Eingriff in eine unbeteiligte Sache.'],
+  comparison: ['Dachpfannen · § 228: Eingriff in die Gefahrenquelle.', 'Tür · § 904: Eingriff in eine unbeteiligte Sache.'],
   comparisonNote: 'Defensiv und aggressiv bezeichnen hier die rechtliche Einordnung, nicht die Heftigkeit des Handelns.',
+  comparisonLabel: 'Zum Vergleich',
+  proportionality: {
+    definition: 'Verhältnismäßigkeit bedeutet: Eine Maßnahme darf im Verhältnis zum Anlass nicht übermäßig sein. Welche Grenzen gelten, hängt von der jeweiligen Rechtsgrundlage ab.',
+    norms: [
+      '§ 228 BGB: Die Abwehr muss erforderlich sein. Der Schaden darf nicht außer Verhältnis zur Gefahr stehen.',
+      '§ 904 BGB: Der Eingriff muss zur Abwehr einer gegenwärtigen Gefahr notwendig sein. Der drohende Schaden muss gegenüber dem verursachten Schaden unverhältnismäßig groß sein.',
+    ],
+    notwehr: 'Bei Notwehr (§ 227 BGB) gelten Erforderlichkeit und Gebotenheit. Eine allgemeine Abwägung nach dem Muster des § 904 ist nicht vorgesehen.',
+  },
   nextLabel: 'Nächster Abschnitt',
 };
 
@@ -280,12 +290,15 @@ export interface CourseContent {
   final: FinalCheck;
   /** Episode to open first; only changed by the developer switch below. */
   start: 'reception' | 'roof' | 'door' | 'final';
+  /** Running inside the desktop "Mobile Vorschau" frame. */
+  preview: boolean;
 }
 
 /**
  * Developer switches, not shown to learners:
  * - `?media=missing` points every main clip and frame to a non-existent path.
  * - `?start=roof` / `?start=door` / `?start=final` opens that part directly.
+ * - `?preview=mobile` is set by the "Mobile Vorschau" frame: no preview button inside it.
  * - `?branches=missing` points the branch clips to non-existent paths, to test the text fallback.
  */
 export function resolveCourse(search: string): CourseContent {
@@ -308,5 +321,6 @@ export function resolveCourse(search: string): CourseContent {
     perspectives: perspectivesScreen,
     final: { ...finalCheck, media: hide(finalCheck.media) },
     start: (['roof', 'door', 'final'] as const).find((e) => e === params.get('start')) ?? 'reception',
+    preview: params.get('preview') === 'mobile',
   };
 }

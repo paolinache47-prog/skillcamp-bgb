@@ -1,7 +1,7 @@
 import { useMemo, useReducer, useRef } from 'react';
 import type { DecisionId, FinalCheck } from '../content/types';
 import { useFocusOnChange } from '../hooks/useFocusOnChange';
-import { createFinalReducer, finalInitial, reviewDecisions, score, type FinalConfig } from '../state/finalMachine';
+import { createFinalReducer, finalInitial, reviewDecisions, reviewFinished, score, wrongTopics, type FinalConfig } from '../state/finalMachine';
 import { CaseTask } from './CaseTask';
 import { FinalResult } from './FinalResult';
 import { TaskScreen } from './TaskScreen';
@@ -29,9 +29,10 @@ export function FinalCheckFlow({ content, onRestart }: { content: FinalCheck; on
     screen = (
       <FinalResult
         content={content}
-        state={state}
         correct={s.correct}
         total={s.total}
+        topics={wrongTopics(state, config, content.result.topics)}
+        reviewDone={reviewFinished(state)}
         onReview={() => dispatch({ type: 'START_REVIEW' })}
         onBack={() => dispatch({ type: 'BACK' })}
         onRestart={onRestart}
@@ -51,6 +52,7 @@ export function FinalCheckFlow({ content, onRestart }: { content: FinalCheck; on
         decisions={ids.map((id) => content.decisions[id])}
         answers={checked ? r.answers : r.draft}
         checked={checked}
+        submitLabel={task.reviewSubmitLabel}
         onSelect={(id, option) => dispatch({ type: 'REVIEW_SELECT', id, option })}
         onSubmit={() => dispatch({ type: 'REVIEW_SUBMIT' })}
         onNext={() => dispatch({ type: 'REVIEW_NEXT' })}

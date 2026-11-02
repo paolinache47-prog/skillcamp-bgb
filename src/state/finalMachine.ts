@@ -3,6 +3,9 @@
  *
  * The first attempt of each decision is stored once, when its task is submitted, and never
  * changes afterwards. The repetition has its own answers and does not touch the result.
+ *
+ * Task 1 has a written justification between locking the answers and showing the results.
+ * It is self-reflection: never scored, stays in memory, is sent nowhere.
  */
 import type { DecisionId, TaskId } from '../content/types';
 
@@ -12,6 +15,13 @@ export type FinalStep = TaskId | 'result' | 'review';
 
 type Answers = Partial<Record<DecisionId, string>>;
 
+export interface Written {
+  text: string;
+  /** The model answer and the results of task 1 are visible. */
+  revealed: boolean;
+  selfCheck: Record<string, boolean>;
+}
+
 export interface FinalState {
   step: FinalStep;
   /** How far the case screen got; going back to it does not replay anything. */
@@ -19,6 +29,7 @@ export interface FinalState {
   draft: Answers;
   first: Answers;
   checked: TaskId[];
+  written: Written;
   review: {
     tasks: TaskId[];
     index: number;
@@ -32,6 +43,10 @@ export type FinalEvent =
   | { type: 'CASE_NEXT' }
   | { type: 'SELECT'; id: DecisionId; option: string }
   | { type: 'SUBMIT' }
+  | { type: 'WRITE'; text: string }
+  /** 'compare' needs a non-empty text; 'unsure' continues without one. */
+  | { type: 'REVEAL_MODEL'; mode: 'compare' | 'unsure' }
+  | { type: 'TOGGLE_SELF_CHECK'; id: string }
   | { type: 'NEXT' }
   | { type: 'BACK' }
   | { type: 'START_REVIEW' }
@@ -50,6 +65,7 @@ export const finalInitial: FinalState = {
   draft: {},
   first: {},
   checked: [],
+  written: { text: '', revealed: false, selfCheck: {} },
   review: null,
 };
 
@@ -60,6 +76,17 @@ export function wrongDecisions(state: FinalState, config: FinalConfig): Decision
 export function score(state: FinalState, config: FinalConfig) {
   const all = config.tasks.flatMap((t) => t.decisions);
   return { correct: all.filter((id) => state.first[id] === config.correct[id]).length, total: all.length };
+}
+
+/** Topics touched by first-attempt mistakes, each once, in the given order. */
+export function wrongTopics<T extends { decisions: DecisionId[] }>(state: FinalState, config: FinalConfig, topics: T[]): T[] {
+  const wrong = wrongDecisions(state, config);
+  return topics.filter((t) => t.decisions.some((id) => wrong.includes(id)));
+}
+
+/** The repetition was started and every one of its screens was checked. */
+export function reviewFinished(state: FinalState): boolean {
+  return state.review !== null && state.review.checked.length === state.review.tasks.length;
 }
 
 /** Decisions of a task that the repetition asks again (only the wrong ones). */
@@ -95,8 +122,24 @@ export function createFinalReducer(config: FinalConfig) {
         return { ...state, first, checked: [...state.checked, current.id] };
       }
 
+      case 'WRITE':
+        if (!state.checked.includes('assign') || state.written.revealed) return state;
+        return { ...state, written: { ...state.written, text: event.text } };
+
+      case 'REVEAL_MODEL':
+        if (!state.checked.includes('assign') || state.written.revealed) return state;
+        if (event.mode === 'compare' && state.written.text.trim() === '') return state;
+        return { ...state, written: { ...state.written, revealed: true } };
+
+      case 'TOGGLE_SELF_CHECK': {
+        if (!state.written.revealed) return state;
+        const selfCheck = { ...state.written.selfCheck, [event.id]: !state.written.selfCheck[event.id] };
+        return { ...state, written: { ...state.written, selfCheck } };
+      }
+
       case 'NEXT': {
         if (!current || !state.checked.includes(current.id)) return state;
+        if (current.id === 'assign' && !state.written.revealed) return state;
         const nextTask = taskIds[currentIndex + 1];
         return { ...state, step: nextTask ?? 'result' };
       }

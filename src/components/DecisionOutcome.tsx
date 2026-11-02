@@ -4,7 +4,7 @@ import { CheckIcon, InfoIcon } from './Icons';
 interface Props {
   decision: ScoredDecision;
   answer: string | undefined;
-  /** Feedback text for this decision; null for tasks with one shared feedback. */
+  /** Feedback text for this decision and answer. */
   feedback: string | null;
   /** Show the decision's label in the status line (tasks with several decisions). */
   named?: boolean;
@@ -23,7 +23,8 @@ export function DecisionOutcome({ decision, answer, feedback, named }: Props) {
         {correct ? <CheckIcon /> : <InfoIcon />}
       </span>
       <div>
-        <p className="outcome-status">{status}</p>
+        {/* A feedback text that already opens with the verdict needs no separate status line. */}
+        {!feedback?.startsWith(status) && <p className="outcome-status">{status}</p>}
         {!correct && chosen && <p className="outcome-answer">Ihre Antwort: {chosen}</p>}
         {feedback && <p>{feedback}</p>}
       </div>

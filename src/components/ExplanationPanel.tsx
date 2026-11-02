@@ -19,7 +19,7 @@ export function ExplanationPanel({ segment, state, dispatch, canReplay, onReplay
   const done = allExplored(state, hotspots.map((h) => h.id));
 
   return (
-    <div className="panel">
+    <div className="panel panel-hotspots">
       <h2 className="panel-title">{analysis.heading}</h2>
       <p className="panel-instruction">{analysis.instruction}</p>
 
@@ -55,7 +55,12 @@ export function ExplanationPanel({ segment, state, dispatch, canReplay, onReplay
           <p className="explanation-empty">Die Details sind am Standbild verfügbar.</p>
         ) : active ? (
           <div key={active.id} className="explanation-body">
-            <h3 className="explanation-title">{active.title}</h3>
+            <h3 className="explanation-title">
+              <span className="marker-number" aria-hidden="true">
+                {hotspots.indexOf(active) + 1}
+              </span>
+              {active.title}
+            </h3>
             <p>{active.text}</p>
           </div>
         ) : (
@@ -69,6 +74,11 @@ export function ExplanationPanel({ segment, state, dispatch, canReplay, onReplay
             {analysis.summary.title}
           </h3>
           <p>{analysis.summary.text}</p>
+          {analysis.summary.notes?.map((n) => (
+            <p key={n} className="summary-note">
+              {n}
+            </p>
+          ))}
         </section>
       )}
 

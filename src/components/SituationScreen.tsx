@@ -6,6 +6,8 @@ import { VideoScene, type VideoSceneHandle } from './VideoScene';
 
 interface Props {
   heading: string;
+  /** Short narrative line connecting this scene to the previous one. */
+  lead?: string;
   context: string;
   media: MediaConfig;
   state: SegmentState;
@@ -24,7 +26,7 @@ interface Props {
  * Video first and centred; after the freeze it slides into the left column and the
  * panel appears on the right. One movement, skipped with reduced motion.
  */
-export function SituationScreen({ heading, context, media, state, dispatch, renderOverlay, renderPanel, stageOverride, stageNote }: Props) {
+export function SituationScreen({ heading, lead, context, media, state, dispatch, renderOverlay, renderPanel, stageOverride, stageNote }: Props) {
   const reducedMotion = usePrefersReducedMotion();
   const videoRef = useRef<VideoSceneHandle>(null);
   const mainRef = useRef<HTMLDivElement>(null);
@@ -57,6 +59,7 @@ export function SituationScreen({ heading, context, media, state, dispatch, rend
           <h1 id="situation-title" className="scene-title" tabIndex={-1}>
             {heading}
           </h1>
+          {lead && <p className="scene-lead">{lead}</p>}
           <p className="scene-context">{context}</p>
         </div>
 

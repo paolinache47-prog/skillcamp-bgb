@@ -1,27 +1,20 @@
 import { describe, expect, it } from 'vitest';
-import { createDoorReducer, createRoofReducer, doorInitial, roofInitial, type DoorEvent, type RoofEvent } from './episodeMachines';
+import { createDoorReducer, doorInitial, roofInitial, roofReducer, type DoorEvent, type RoofEvent } from './episodeMachines';
 
-const roof = createRoofReducer(2);
 const door = createDoorReducer(['damage', 'wait']);
-const runRoof = (events: RoofEvent[]) => events.reduce(roof, roofInitial);
+const runRoof = (events: RoofEvent[]) => events.reduce(roofReducer, roofInitial);
 const runDoor = (events: DoorEvent[]) => events.reduce(door, doorInitial);
 
 describe('roof episode', () => {
-  it('reveals the two items in order and asks only afterwards', () => {
-    const early = runRoof([{ type: 'SHOW_COMPARE' }, { type: 'REVEAL_NEXT' }, { type: 'CHOOSE', id: 'source' }]);
-    expect(early.revealed).toBe(1);
-    expect(early.choice).toBeNull();
-
-    const s = runRoof([{ type: 'SHOW_COMPARE' }, { type: 'REVEAL_NEXT' }, { type: 'REVEAL_NEXT' }, { type: 'REVEAL_NEXT' }]);
-    expect(s.revealed).toBe(2);
+  it('the comparison follows the answer, never before it', () => {
+    const s = runRoof([{ type: 'SHOW_RULE' }, { type: 'SUBMIT' }]);
+    expect(s.step).toBe('question');
+    const changed = runRoof([{ type: 'CHOOSE', id: 'uninvolved' }, { type: 'CHOOSE', id: 'source' }]);
+    expect(changed.choice).toBe('source');
   });
 
   it('a repeated submit or rule click does not skip steps', () => {
     const s = runRoof([
-      { type: 'SHOW_COMPARE' },
-      { type: 'SHOW_COMPARE' },
-      { type: 'REVEAL_NEXT' },
-      { type: 'REVEAL_NEXT' },
       { type: 'CHOOSE', id: 'uninvolved' },
       { type: 'SUBMIT' },
       { type: 'CHOOSE', id: 'source' },
@@ -31,7 +24,7 @@ describe('roof episode', () => {
     ]);
     expect(s.step).toBe('rule');
     expect(s.submittedChoice).toBe('uninvolved');
-    expect(roof(s, { type: 'SHOW_CONSEQUENCES' }).step).toBe('consequences');
+    expect(roofReducer(s, { type: 'SHOW_CONSEQUENCES' }).step).toBe('consequences');
   });
 });
 
@@ -47,10 +40,24 @@ describe('door episode', () => {
     expect(door(s, { type: 'TOGGLE_BRANCH' }).viewing).toBe('wait');
   });
 
-  it('a double submit stays in the outcome; the rule needs a decision first', () => {
+  it('a double submit stays in the outcome; the rule needs the role question first', () => {
     expect(runDoor([{ type: 'SHOW_RULE' }]).step).toBe('choose');
     const s = runDoor([{ type: 'CHOOSE', id: 'damage' }, { type: 'SUBMIT' }, { type: 'SUBMIT' }]);
     expect(s.step).toBe('outcome');
-    expect(door(door(s, { type: 'SHOW_RULE' }), { type: 'TOGGLE_BRANCH' }).viewing).toBe('damage');
+    expect(door(s, { type: 'SHOW_RULE' }).step).toBe('outcome');
+
+    const role = door(s, { type: 'SHOW_ROLE' });
+    expect(door(role, { type: 'SHOW_RULE' }).step).toBe('role');
+    expect(door(role, { type: 'SUBMIT_ROLE' }).roleAnswer).toBeNull();
+    expect(door(role, { type: 'TOGGLE_BRANCH' }).viewing).toBe('damage');
+
+    const answered = [{ type: 'CHOOSE_ROLE', id: 'source' }, { type: 'SUBMIT_ROLE' }, { type: 'CHOOSE_ROLE', id: 'access' }, { type: 'SUBMIT_ROLE' }] as DoorEvent[];
+    const a = answered.reduce(door, role);
+    expect(a.roleAnswer).toBe('source');
+
+    const rule = door(a, { type: 'SHOW_RULE' });
+    expect(rule.step).toBe('rule');
+    expect(door(a, { type: 'SHOW_COMPARE' }).step).toBe('role');
+    expect(door(rule, { type: 'SHOW_COMPARE' }).step).toBe('compare');
   });
 });

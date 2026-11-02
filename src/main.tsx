@@ -8,6 +8,7 @@ import { CourseShell } from './components/CourseShell';
 import { resolveCourse } from './content/lesson';
 
 const content = resolveCourse(window.location.search);
+if (content.preview) document.documentElement.classList.add('is-preview');
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>

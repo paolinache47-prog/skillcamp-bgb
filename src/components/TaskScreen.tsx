@@ -1,7 +1,7 @@
 import { useEffect, useRef, type ReactNode } from 'react';
 import { feedbackFor } from '../content/finalCheck';
 import type { DecisionId, FinalTask, ScoredDecision } from '../content/types';
-import { ChoiceGroup, Feedback } from './ChoiceGroup';
+import { ChoiceGroup } from './ChoiceGroup';
 import { DecisionOutcome } from './DecisionOutcome';
 import { ArrowRightIcon } from './Icons';
 
@@ -12,6 +12,8 @@ interface Props {
   decisions: ScoredDecision[];
   answers: Partial<Record<DecisionId, string>>;
   checked: boolean;
+  /** Overrides the task's button label (repetition). */
+  submitLabel?: string;
   onSelect: (id: DecisionId, option: string) => void;
   onSubmit: () => void;
   onNext: () => void;
@@ -24,7 +26,7 @@ interface Props {
 }
 
 /** One task of the final check on its own screen: questions, one check, feedback, next. */
-export function TaskScreen({ task, kicker, decisions, answers, checked, onSelect, onSubmit, onNext, nextLabel, onBack, caseImage, context, note }: Props) {
+export function TaskScreen({ task, kicker, decisions, answers, checked, submitLabel, onSelect, onSubmit, onNext, nextLabel, onBack, caseImage, context, note }: Props) {
   const complete = decisions.every((d) => answers[d.id] !== undefined);
   const named = decisions.length > 1;
 
@@ -44,7 +46,6 @@ export function TaskScreen({ task, kicker, decisions, answers, checked, onSelect
           {task.heading}
         </h1>
         {note && <p className="task-note">{note}</p>}
-        {task.instruction && <p className="scene-context">{task.instruction}</p>}
         {context}
         {task.scenario && (
           <div className="assumption">
@@ -75,12 +76,6 @@ export function TaskScreen({ task, kicker, decisions, answers, checked, onSelect
             </div>
           ))}
 
-          {task.feedback && (
-            <div aria-live="polite">
-              {checked && <Feedback positive={decisions.every((d) => answers[d.id] === d.correct)}>{task.feedback}</Feedback>}
-            </div>
-          )}
-
           <div className="panel-actions">
             {onBack && (
               <button type="button" className="button button-ghost" onClick={onBack}>
@@ -89,7 +84,7 @@ export function TaskScreen({ task, kicker, decisions, answers, checked, onSelect
             )}
             {!checked ? (
               <button type="submit" className="button button-primary" disabled={!complete}>
-                {task.submitLabel}
+                {submitLabel ?? task.submitLabel}
               </button>
             ) : (
               <button ref={nextRef} type="button" className="button button-primary" onClick={onNext}>

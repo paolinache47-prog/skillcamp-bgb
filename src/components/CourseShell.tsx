@@ -4,6 +4,7 @@ import type { Stage } from '../content/types';
 import { useFocusOnChange } from '../hooks/useFocusOnChange';
 import { DoorEpisode } from './DoorEpisode';
 import { LegalSources } from './LegalSources';
+import { MobilePreview, useCloseFromPreviewFrame } from './MobilePreview';
 import { ReceptionEpisode } from './ReceptionEpisode';
 import { RoofEpisode } from './RoofEpisode';
 import { FinalCheckFlow } from './FinalCheckFlow';
@@ -25,6 +26,7 @@ export function CourseShell({ content }: { content: CourseContent }) {
   // A new run remounts the episodes, so a restart begins with fresh state.
   const [run, setRun] = useState(0);
   const stage = stageOf[episode];
+  useCloseFromPreviewFrame(content.preview);
 
   // Advance only from the episode that asked: repeated clicks cannot skip one.
   const advanceFrom = useCallback(
@@ -56,6 +58,7 @@ export function CourseShell({ content }: { content: CourseContent }) {
               );
             })}
           </ol>
+          {!content.preview && <MobilePreview />}
           <LegalSources />
         </div>
       </header>

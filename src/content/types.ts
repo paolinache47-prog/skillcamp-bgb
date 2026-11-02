@@ -57,6 +57,8 @@ export interface Decision {
 export interface Summary {
   title: string;
   text: string;
+  /** Further short paragraphs of the same block. */
+  notes?: string[];
 }
 
 export interface LegalSource {
@@ -72,8 +74,9 @@ export interface Segment {
   intro: {
     caption: string;
     title: string;
+    tagline: string;
     lead: string;
-    meta: string;
+    outlook: string;
     cta: string;
     mediaNote: string;
   };
@@ -100,22 +103,35 @@ export interface ChoiceOption {
   label: string;
 }
 
-/** Episode "Dachziegel": observe → continuation → compare → § 228. */
+/** Scene head; `lead` is the short narrative line connecting it to the previous scene. */
+export interface SceneIntro {
+  heading: string;
+  lead?: string;
+  context: string;
+}
+
+/** Practice question inside an episode: never part of the score of the final check. */
+export interface PracticeQuestion {
+  prompt: string;
+  options: ChoiceOption[];
+  correct: string;
+  submitLabel: string;
+}
+
+/** Episode "Dachpfannen": observe → continuation and question → comparison → § 228. */
 export interface RoofEpisode {
   id: string;
   stage: Stage;
-  scene: { heading: string; context: string };
+  scene: SceneIntro;
   media: MediaConfig;
   continuation: { heading: string; text: string };
+  question: PracticeQuestion;
   compare: {
     heading: string;
-    instruction: string;
-    /** Revealed one after another; both mark the same area of the frame. */
-    items: { label: string; text: string; highlightLabel: string }[];
+    items: string[];
+    explanation: string;
+    highlightLabel: string;
     region: RelBox;
-    question: string;
-    options: DecisionOption[];
-    submitLabel: string;
   };
   rule: { heading: string; text: string };
   consequences: { heading: string; application: string; addition: string; note: string };
@@ -146,15 +162,18 @@ export interface DoorBranch {
 export interface DoorEpisode {
   id: string;
   stage: Stage;
-  scene: { heading: string; context: string };
+  scene: SceneIntro;
   media: MediaConfig;
-  conditions: { heading: string; items: string[] };
+  conditions: { heading: string; facts: string; items: string[] };
   question: string;
   submitLabel: string;
   branches: DoorBranch[];
-  rule: { heading: string; text: string; application: string; purpose: string; consequence: string };
+  role: PracticeQuestion & { heading: string; note: string; explanation: string; nextLabel: string };
+  rule: { heading: string; text: string; application: string; consequence: string };
   comparison: string[];
   comparisonNote: string;
+  comparisonLabel: string;
+  proportionality: { definition: string; norms: string[]; notwehr: string };
   nextLabel: string;
 }
 
@@ -176,8 +195,7 @@ export type DecisionId =
   | 'aggressive_conditions'
   | 'compensation'
   | 'notwehr_basis'
-  | 'criminal_perspective'
-  | 'civil_perspective';
+  | 'legal_perspectives';
 
 export interface ScoredDecision {
   id: DecisionId;
@@ -187,8 +205,8 @@ export interface ScoredDecision {
   prompt: string;
   options: ChoiceOption[];
   correct: string;
-  /** One text for every answer, or one per chosen option. Absent: the task's shared feedback. */
-  feedback?: string | Record<string, string>;
+  /** One text for every answer, or one per chosen option (by option id). */
+  feedback: string | Record<string, string>;
 }
 
 export type TaskId = 'assign' | 'conditions' | 'compensation' | 'notwehr' | 'perspectives';
@@ -196,31 +214,51 @@ export type TaskId = 'assign' | 'conditions' | 'compensation' | 'notwehr' | 'per
 export interface FinalTask {
   id: TaskId;
   heading: string;
-  instruction?: string;
   scenario?: string;
   decisions: DecisionId[];
   submitLabel: string;
-  /** Shared feedback after checking, shown once for the whole task. */
-  feedback?: string;
+  /** Button in the repetition, when it differs from the first attempt. */
+  reviewSubmitLabel?: string;
   /** Show the case still as a small image for context. */
   showCaseImage?: boolean;
 }
 
 export interface FinalCheck {
   stage: Stage;
-  scene: { heading: string; context: string };
+  scene: SceneIntro;
   media: MediaConfig;
   continuation: { heading: string; text: string };
   conditions: { heading: string; items: string[] };
   kicker: string;
   tasks: FinalTask[];
   decisions: Record<DecisionId, ScoredDecision>;
+  /** Written justification inside task 1: self-reflection, never scored or sent anywhere. */
+  written: {
+    heading: string;
+    prompt: string;
+    label: string;
+    placeholder: string;
+    compareLabel: string;
+    unsureLabel: string;
+    resultHeading: string;
+    ownHeading: string;
+    modelHeading: string;
+    model: string;
+    selfChecks: { id: string; label: string }[];
+    selfCheckCaption: string;
+  };
   result: {
     heading: string;
     allCorrect: string;
+    writtenNote: string;
     memoHeading: string;
     memo: string[];
+    topicsHeading: string;
+    topics: { label: string; decisions: DecisionId[] }[];
     reviewLabel: string;
+    reviewDone: string;
+    reviewDoneNote: string;
+    nextTopic: { heading: string; text: string; caption: string };
     restartLabel: string;
     restartConfirm: string;
     restartCheckLabel: string;

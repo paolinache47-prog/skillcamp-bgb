@@ -12,16 +12,19 @@ Topic 3, модуль Rechtliche Grundlagen, подтема BGB. Аудитор�
 
 Прогресс в шапке: **Verstehen / Unterscheiden / Anwenden**, без «Schritt X von Y».
 
+Сквозная история: стартовый экран «Ihre Schicht. Ihre Entscheidungen.» и короткие реплики в шапке сцен
+черепицы, двери и финального кейса. Отдельных экранов и лишних кликов они не добавляют.
+
 ## Маршрут
 
 | # | Этап | Содержание | Оценка времени | Статус |
 |---|---|---|---|---|
 | 0 | — | Вступление | 15 с | **реализовано** |
 | 1 | Verstehen | Видео «Empfang» → стоп-кадр → 2 хотспота → резюме § 227 → изменилось одно обстоятельство (решение) | 70 с | **реализовано** |
-| 2 | Unterscheiden | «Dachziegel» (§ 228) и «Verschlossene Tür» (§ 904, выбор с двумя видео-ветками) | 65 с (оценка, с ветками, вероятно, больше) | **реализовано** |
+| 2 | Unterscheiden | «Dachpfannen» (§ 228) и «Verschlossene Tür» (§ 904, выбор с двумя видео-ветками) | 65 с (оценка, с ветками, вероятно, больше) | **реализовано** |
 | 3 | Anwenden | Экран «Ein Vorfall – zwei rechtliche Perspektiven» (§ 32 StGB / § 227 BGB); компенсация § 228/§ 904 уже объяснена в эпизодах 2 | 15–35 с | **реализовано** |
-| 4 | Anwenden | Видеокейс «Ein Vorfall am Eingang» (`dog-bottle.mp4`) + Selbstcheck из 5 заданий, 8 оцениваемых решений | 100 с+ (не измерено) | **реализовано** |
-| 5 | — | «Ihr Ergebnis»: X von 8 beim ersten Versuch, памятка, повтор ошибок, Neu starten | 15 с | **реализовано** |
+| 4 | Anwenden | Видеокейс «Ein Vorfall am Eingang» (`dog-bottle.mp4`) + Selbstcheck из 5 заданий, 7 оцениваемых решений и письменная часть без баллов | 100 с+ (не измерено) | **реализовано** |
+| 5 | — | «Ihr Ergebnis»: X von 7 beim ersten Versuch, памятка, повтор ошибок, Neu starten | 15 с | **реализовано** |
 
 ### 1. Verstehen (реализовано)
 
@@ -30,38 +33,25 @@ Topic 3, модуль Rechtliche Grundlagen, подтема BGB. Аудитор�
 § 227 BGB). Предпосылка: «Der Besucher ist nicht zu dem Angriff berechtigt.»
 Закрепление: нападение завершилось, поэтому толчок в наказание Notwehr не оправдывает.
 
-### 2. Unterscheiden: «Dachziegel» и «Verschlossene Tür» (реализовано, итерация 2)
+### 2. Unterscheiden: «Dachpfannen» и «Verschlossene Tür» (реализовано, итерация 2)
 
 Эпизод с конвейером (`machine.mp4`) **исключён**. Вместо него — черепица.
 
-**Dachziegel (§ 228, defensiver Notstand)** — `roof-tiles.mp4`.
-1. Видео → стоп-кадр (4,8 с) с хорошо видимыми сдвинутыми черепицами.
-2. «So geht der Fall weiter» — явно подписанное текстовое продолжение (ограждение
-   недостаточно, черепицу нужно снять, при снятии она ломается, мягче нельзя, своей
-   вины нет). Без инструкции по работам на высоте.
-3. «Gefahrenquelle und Eingriff»: два пункта раскрываются по очереди, на кадре одна и та же
-   рамка с подписью. Одна классификация: «Gegen die Gefahrenquelle» / «Gegen eine
-   unbeteiligte Sache» → «Einordnung ansehen». Без баллов.
-4. Правило § 228 (два состояния панели): условия, затем применение, обязанность
-   возмещения при собственной вине и заметка о § 90a BGB.
+**Dachpfannen (§ 228, defensiver Notstand)** — `roof-tiles.mp4`.
+1. Видео → стоп-кадр (4,8 с).
+2. «So geht der Fall weiter» (текст) и учебный вопрос «Welche Sache wird beschädigt?». Без рамки на кадре,
+   названия нормы и инструкции по работам на высоте.
+3. После ответа: рамка, «Gefahrenquelle / Beschädigte Sache», объяснение со ссылкой на § 228.
+4. Условия § 228 и панель с применением, виной и § 90a BGB.
 
 **Verschlossene Tür (§ 904, aggressiver Notstand)** — `door-start.mp4`.
 1. Видео → стоп-кадр (4,8 с).
-2. Условия видны **до** выбора. Выбор A «Tür beschädigen» / B «Warten» можно менять до
-   «Entscheidung ansehen».
-3. Ветки: «Möglicher weiterer Verlauf» — видео `door-open.mp4` (с 3,6 с) / `door-wait.mp4`; текст остаётся запасным вариантом.
-   Обоснование опирается на условия, а не на исход.
-4. «Rechtliche Einordnung» (обязательно) и «Andere Entscheidung ansehen» (необязательно,
-   первоначальный выбор не меняется).
-5. § 904: условия, применение, цель, право собственника на возмещение (без
-   окончательного распределения расходов и регресса). Ниже — сравнение «Dachziegel · § 228 /
-   Tür · § 904».
-
-**Итог итерации:** «Diese beiden Situationen haben Sie eingeordnet» и повтор обоих эпизодов.
-Пока нет дальнейших экранов, кнопки продолжения нет.
-
-Подпись «Defensiv und aggressiv bezeichnen hier die rechtliche Einordnung, nicht die Heftigkeit
-des Handelns.» выводится под сравнением в панели § 904.
+2. Только факты (дым, заперт, помощь не успеет, нет другого доступа) и выбор A/B, менять можно до подтверждения.
+3. Ролик ветки: `door-open.mp4` (с 3,6 с) или `door-wait.mp4`; текст остаётся запасным вариантом.
+   Короткий отзыв без нормы. «Andere Entscheidung ansehen» необязательна.
+4. Учебный вопрос «Welche Rolle spielt die Tür…» без оценки → объяснение (Rauch, unbeteiligte Sache, § 904).
+5. § 904: условия, применение, право собственника на возмещение (без распределения расходов и регресса).
+6. «Im Vergleich»: сопоставление двух норм, Verhältnismäßigkeit, строка про § 227.
 
 ### 3–5. Перспективы, финальный кейс и итог (реализовано)
 
@@ -71,13 +61,17 @@ des Handelns.» выводится под сравнением в панели �
 - **Кейс:** `dog-bottle.mp4` (5 с) → стоп-кадр на 2,6 с (собака скалит зубы, бутылка у гостя видна) →
   «Der weitere Verlauf» (текст, без изображения удара) и условия «Für diese Aufgabe gilt» до ответов.
 - **Selbstcheck** по очереди, первая попытка фиксируется при отправке:
-  1. два вмешательства (хотспоты + кнопки, три основания) — `dog_basis`, `bottle_basis`;
+  1. два вмешательства (хотспоты + кнопки, три основания) — `dog_basis`, `bottle_basis`; ответы фиксируются
+     без показа правильности → письменное объяснение (самопроверка без баллов) → результаты и образец;
   2. условия § 228 / § 904 — `defensive_conditions`, `aggressive_conditions`;
   3. возмещение — `compensation`;
-  4. человеческое нападение, Nothilfe — `notwehr_basis`;
-  5. § 32 StGB / § 227 BGB — `criminal_perspective`, `civil_perspective`.
-- **Итог:** «X von 8 Entscheidungen beim ersten Versuch richtig», список решений, памятка,
-  повтор только ошибок (результат не меняется), Rechtsquellen, «Neu starten» с подтверждением.
+  4. второй инцидент у стойки, Nothilfe — `notwehr_basis`;
+  5. Strafanzeige и Schadensersatz, StGB и BGB — `legal_perspectives`.
+- **Итог:** «Ihr Ergebnis: X von 7 Entscheidungen beim ersten Versuch richtig», «Schriftliche Begründung:
+  Selbstreflexion ohne Punktwertung», темы для повторения по фактическим ошибкам, повтор (результат не меняется,
+  в конце «Wiederholung abgeschlossen»), Rechtsquellen, «Neu starten» с подтверждением, памятка.
+- **Анонс:** «Und wenn jemand eine Sache einfach mitnimmt?» — Besitzwehr, Besitzkehr, Selbsthilfe. Только текст,
+  следующего модуля пока нет.
 - Сознательно не включено: § 833 BGB, регресс, окончательный плательщик, утверждение о разбитой бутылке.
 
 ## Матрица покрытия заданий академии
@@ -86,9 +80,9 @@ des Handelns.» выводится под сравнением в панели �
 |---|---|---|---|---|
 | 3 | Различие Notwehr / Notstand | 1 (Notwehr) + 2 (Notstand) | задание 1 (§ 228/§ 904) + задание 4 (Nothilfe) | **готово** |
 | 4 | Названия defensiver / aggressiver Notstand, §§ 228 / 904 BGB | 2 | задание 1 | **готово** |
-| 9 | Пределы вмешательства, критерии каждой нормы | 1 (gegenwärtig, beendet, erforderlich/geboten), 2 | задание 2 (§ 228 / § 904) | **готово** (Erforderlichkeit у Notwehr только названа) |
+| 9 | Пределы вмешательства, критерии каждой нормы | 1 (gegenwärtig, beendet, erforderlich/geboten), 2 | задание 2 (§ 228 / § 904) | **готово** (термин Verhältnismäßigkeit введён в панели «Im Vergleich»; Erforderlichkeit у Notwehr только названа) |
 | 13 | Воздействие на источник опасности / на непричастную вещь | 2 (Gefahrenquelle / unbeteiligte Sache) | задание 1 | **готово** |
-| 14 | Гражданско-правовая и уголовно-правовая оценка Notwehr | экран перспектив | задание 5 | **готово** |
+| 14 | Гражданско-правовая и уголовно-правовая оценка Notwehr | экран перспектив | задание 5 (`legal_perspectives`) | **готово** |
 | 21 | Два вмешательства в кейсе с собакой и бутылкой, условия и последствия | финальный кейс | задания 1–3 | **готово** |
 
 ## Медиа
@@ -99,7 +93,7 @@ des Handelns.» выводится под сравнением в панели �
 | `public/media/reception-poster.jpg` | вступление | есть (кадр 0,5 с) |
 | `public/media/reception-freeze.jpg` | стоп-кадр | есть (кадр 4,5 с) |
 | субтитры `reception.de.vtt` | только если в ролике есть речь | неизвестно, нужна проверка звука |
-| `roof-tiles.mp4` + `roof-poster.jpg` / `roof-freeze.jpg` | 2, Dachziegel | есть (5 с, 1920×1080, водяной знак KlingAI) |
+| `roof-tiles.mp4` + `roof-poster.jpg` / `roof-freeze.jpg` | 2, Dachpfannen | есть (5 с, 1920×1080, водяной знак KlingAI) |
 | `door-start.mp4` + `door-poster.jpg` / `door-freeze.jpg` | 2, Tür | есть (5 с, 1920×1080, дым едва заметен) |
 | `door-open.mp4` | 2, Tür, ветка A | есть, старт с 3,6 с |
 | `door-wait.mp4` | 2, Tür, ветка B | есть, целиком |

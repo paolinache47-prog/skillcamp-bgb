@@ -49,10 +49,11 @@ export function ReceptionEpisode({ segment, onComplete }: { segment: Segment; on
               explored={state.explored}
               onSelect={(id) => {
                 dispatch({ type: 'SELECT_HOTSPOT', id });
-                // On narrow screens the panel sits below the frame: bring the text into view, keep focus.
-                requestAnimationFrame(() =>
-                  document.querySelector('.explanation')?.scrollIntoView({ block: 'nearest', behavior: reducedMotion ? 'auto' : 'smooth' }),
-                );
+                // On narrow screens the panel sits below the frame: keep image and text in view together, keep focus.
+                requestAnimationFrame(() => {
+                  if (window.matchMedia('(max-width: 1023px)').matches) document.querySelector('.stage')?.scrollIntoView({ block: 'start' });
+                  document.querySelector('.explanation')?.scrollIntoView({ block: 'nearest', behavior: reducedMotion ? 'auto' : 'smooth' });
+                });
               }}
             />
           )}

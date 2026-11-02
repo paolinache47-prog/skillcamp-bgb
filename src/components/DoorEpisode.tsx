@@ -32,7 +32,7 @@ export function DoorEpisode({ episode, onComplete }: { episode: DoorContent; onC
   const showClip = state.step === 'outcome' && branch && view !== 'text';
 
   const panelRef = useRef<HTMLDivElement>(null);
-  useFocusOnChange(`${state.step}:${state.viewing}:${view}:${replays}`, panelRef);
+  useFocusOnChange(`${state.step}:${state.viewing}:${view}:${replays}:${state.roleAnswer}`, panelRef);
 
   const replayBranch = (id: string) => {
     setView(id, 'video');
@@ -42,6 +42,7 @@ export function DoorEpisode({ episode, onComplete }: { episode: DoorContent; onC
   return (
     <SituationScreen
       heading={episode.scene.heading}
+      lead={episode.scene.lead}
       context={episode.scene.context}
       media={episode.media}
       state={video}
@@ -78,6 +79,7 @@ export function DoorEpisode({ episode, onComplete }: { episode: DoorContent; onC
               <h2 className="panel-title" tabIndex={-1}>
                 {episode.conditions.heading}
               </h2>
+              <p className="panel-text">{episode.conditions.facts}</p>
               <ul className="condition-list">
                 {episode.conditions.items.map((c) => (
                   <li key={c}>{c}</li>
@@ -136,7 +138,7 @@ export function DoorEpisode({ episode, onComplete }: { episode: DoorContent; onC
                     <Feedback positive={branch.consistent}>{branch.feedback}</Feedback>
                   </div>
                   <div className="panel-actions">
-                    <button type="button" className="button button-primary" onClick={() => dispatch({ type: 'SHOW_RULE' })}>
+                    <button type="button" className="button button-primary" onClick={() => dispatch({ type: 'SHOW_ROLE' })}>
                       Weiter
                       <ArrowRightIcon />
                     </button>
@@ -148,6 +150,48 @@ export function DoorEpisode({ episode, onComplete }: { episode: DoorContent; onC
                     )}
                     <button type="button" className="button button-ghost" onClick={() => dispatch({ type: 'TOGGLE_BRANCH' })}>
                       {isOwnDecision ? 'Andere Entscheidung ansehen' : 'Zurück zu Ihrer Entscheidung'}
+                    </button>
+                  </div>
+                </>
+              )}
+            </>
+          )}
+
+          {state.step === 'role' && (
+            <>
+              <h2 className="panel-title" tabIndex={-1}>
+                {episode.role.heading}
+              </h2>
+              <p className="panel-label">{episode.role.note}</p>
+              <form
+                className="panel-form"
+                onSubmit={(e) => {
+                  e.preventDefault();
+                  dispatch({ type: 'SUBMIT_ROLE' });
+                }}
+              >
+                <ChoiceGroup
+                  legend={episode.role.prompt}
+                  options={episode.role.options}
+                  value={state.roleChoice}
+                  disabled={state.roleAnswer !== null}
+                  onChange={(id) => dispatch({ type: 'CHOOSE_ROLE', id })}
+                />
+                {state.roleAnswer === null && (
+                  <button type="submit" className="button button-primary" disabled={state.roleChoice === null}>
+                    {episode.role.submitLabel}
+                  </button>
+                )}
+              </form>
+              {state.roleAnswer !== null && (
+                <>
+                  <Feedback positive={state.roleAnswer === episode.role.correct}>
+                    {`${state.roleAnswer === episode.role.correct ? 'Richtig.' : 'Nicht ganz.'} ${episode.role.explanation}`}
+                  </Feedback>
+                  <div className="panel-actions">
+                    <button type="button" className="button button-primary" onClick={() => dispatch({ type: 'SHOW_RULE' })}>
+                      {episode.role.nextLabel}
+                      <ArrowRightIcon />
                     </button>
                   </div>
                 </>
@@ -167,18 +211,25 @@ export function DoorEpisode({ episode, onComplete }: { episode: DoorContent; onC
                   <dd>{episode.rule.application}</dd>
                 </div>
                 <div>
-                  <dt>Ziel</dt>
-                  <dd>{episode.rule.purpose}</dd>
-                </div>
-                <div>
                   <dt>Folge</dt>
                   <dd>{episode.rule.consequence}</dd>
                 </div>
               </dl>
-              <section className="compare-mini" aria-labelledby="compare-mini-title">
-                <h3 id="compare-mini-title" className="compare-mini-title">
-                  Im Vergleich
-                </h3>
+              <div className="panel-actions">
+                <button type="button" className="button button-primary" onClick={() => dispatch({ type: 'SHOW_COMPARE' })}>
+                  {episode.comparisonLabel}
+                  <ArrowRightIcon />
+                </button>
+              </div>
+            </>
+          )}
+
+          {state.step === 'compare' && (
+            <>
+              <h2 className="panel-title" tabIndex={-1}>
+                Im Vergleich
+              </h2>
+              <section className="compare-mini">
                 <ul>
                   {episode.comparison.map((c) => (
                     <li key={c}>{c}</li>
@@ -186,6 +237,13 @@ export function DoorEpisode({ episode, onComplete }: { episode: DoorContent; onC
                 </ul>
                 <p className="compare-mini-note">{episode.comparisonNote}</p>
               </section>
+              <p className="panel-note">{episode.proportionality.definition}</p>
+              <ul className="condition-list">
+                {episode.proportionality.norms.map((n) => (
+                  <li key={n}>{n}</li>
+                ))}
+              </ul>
+              <p className="panel-text">{episode.proportionality.notwehr}</p>
               <div className="panel-actions">
                 <button type="button" className="button button-primary" onClick={onComplete}>
                   {episode.nextLabel}

@@ -13,8 +13,8 @@ export function Intro({ segment, onStart }: { segment: Segment; onStart: () => v
         <h1 id="intro-title" className="intro-title" tabIndex={-1}>
           {intro.title}
         </h1>
+        <p className="intro-tagline">{intro.tagline}</p>
         <p className="lead">{intro.lead}</p>
-        <p className="intro-meta">{intro.meta}</p>
         <div className="intro-actions">
           <button type="button" className="button button-primary" onClick={onStart}>
             {intro.cta}
@@ -22,6 +22,7 @@ export function Intro({ segment, onStart }: { segment: Segment; onStart: () => v
           </button>
           <span className="intro-note">{intro.mediaNote}</span>
         </div>
+        <p className="intro-outlook">{intro.outlook}</p>
       </div>
 
       <figure className="intro-media" style={{ aspectRatio: `${media.width} / ${media.height}` }}>

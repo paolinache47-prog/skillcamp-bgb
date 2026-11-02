@@ -71,6 +71,13 @@ export const MutedIcon = () => (
   </Icon>
 );
 
+export const PhoneIcon = () => (
+  <Icon>
+    <rect x="7" y="3" width="10" height="18" rx="2" />
+    <path d="M11 18h2" />
+  </Icon>
+);
+
 export const CheckIcon = () => (
   <Icon>
     <path d="M5 12.5l4.5 4.5L19 7.5" />
